@@ -5,7 +5,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
     id("com.github.johnrengelman.shadow")
-    id("dev.petuska.npm.publish")
+    id("com.apollographql.apollo3").version("3.1.0")
 }
 
 group = "cli"
@@ -24,6 +24,13 @@ application {
     mainClass.set("cli.JvmMainKt")
 }
 
+apollo {
+    packageName.set("cli")
+
+    useSemanticNaming.set(true)
+
+}
+
 kotlin {
 
     val jvmTarget = jvm()
@@ -37,8 +44,12 @@ kotlin {
             dependencies {
                 implementation("com.github.ajalt.clikt:clikt:_")
                 implementation("com.github.ajalt.mordant:mordant:_")
-                implementation("com.squareup.okio:okio-multiplatform:_")
+                //implementation("com.squareup.okio:okio-multiplatform:_")
+                implementation("com.squareup.okio:okio:3.0.0")
                 implementation(KotlinX.coroutines.core)
+
+                implementation("com.apollographql.apollo3:apollo-runtime:3.1.0")
+                implementation("com.apollographql.apollo3:apollo-api:3.1.0")
 
                 /// implementation(Ktor.client.core)
                 /// implementation(Ktor.client.serialization)
