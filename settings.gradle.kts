@@ -24,4 +24,4 @@ gradleEnterprise {
 
 }
 
-rootProject.name = "kotlin-cli-starter"
+rootProject.name = "graphql-response-recorder"
