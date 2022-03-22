@@ -1,30 +1,44 @@
 package cli
 
 import com.apollographql.apollo3.api.Optional
+import com.apollographql.apollo3.api.Query
 import internal.GraphqlResponseRecorder
 import kotlinx.coroutines.runBlocking
+import java.io.File
+import kotlin.system.exitProcess
+
+val queryMap = mapOf<String, Query<*>>(
+    "LaunchsQueryResult" to LaunchesQuery(
+        pageSize = 3,
+        after = Optional.presentIfNotNull(null)),
+    "LaunchsQueryResult2" to LaunchesQuery(
+        pageSize = 3,
+        after = Optional.presentIfNotNull(null))
+)
 
 fun main(args: Array<String>) {
-    runBlocking {
-
-        val responseRecorder = GraphqlResponseRecorder(
-            serverUrl = "https://apollo-fullstack-tutorial.herokuapp.com/graphql"
-        )
-        //var cursor: String? = null
-//        val responses = intArrayOf(1).map {
-//            val query = LaunchesQuery(
-//                pageSize = 3,
-//                after = Optional.presentIfNotNull(cursor)
-//            )
-//            val response = responseRecorder.fetch(query)
-//            cursor = response.model.data?.launches?.cursor
-//            response.raw
-//        }
-        test()
-        //println(responses.joinToString("\n\n"))
+    if (args.size != 3) {
+        println("should add args [templatePathString] [outputPathString] [outputExtension]")
+        return
     }
-}
 
-suspend fun test() {
-    println("Testtttt")
+    val templatePathString = args[0]
+    val outputPathString = args[1]
+    var extension: String = args[2]
+    val template = File(templatePathString).readText(Charsets.UTF_8)
+
+    runBlocking {
+        val responseRecorder = GraphqlResponseRecorder("https://apollo-fullstack-tutorial.herokuapp.com/graphql")
+        val responses = queryMap.map { (name, query) ->
+            val response = responseRecorder.fetch(query)
+            val outputDirectory = File(outputPathString + "/${name}.result.${extension}")
+            outputDirectory.printWriter().use {
+                val newResult = response.raw.replace("\"", "\\\"")
+                var output = template
+                    .replace("{variableName}", name)
+                    .replace("{result}", newResult)
+                it.write(output)
+            }
+        }
+    }
 }

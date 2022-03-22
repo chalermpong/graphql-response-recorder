@@ -6,5 +6,6 @@ users.db/
 buildscan.log
 *.hprof
 /.envrc
+.DS_Store
 
 git-standup-report.txt
