@@ -19,6 +19,7 @@ val queryMap = mapOf<String, Query<*>>(
 fun main(args: Array<String>) {
     if (args.size != 3) {
         println("should add args [templatePathString] [outputPathString] [outputExtension]")
+        println("Example: --args=\"../TestGraphQLGenerator/template/gql-generator-template ../TestGraphQLGenerator/output swift\"")
         return
     }
 
