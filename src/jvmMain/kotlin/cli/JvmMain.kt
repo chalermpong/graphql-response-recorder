@@ -5,7 +5,6 @@ import com.apollographql.apollo3.api.Query
 import internal.GraphqlResponseRecorder
 import kotlinx.coroutines.runBlocking
 import java.io.File
-import kotlin.system.exitProcess
 
 val queryMap = mapOf<String, Query<*>>(
     "LaunchsQueryResult" to LaunchesQuery(
