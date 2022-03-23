@@ -14,13 +14,16 @@ class GraphqlResponseRecorder(
     data class RecordSpec(val name: String, val query: Query<*>)
 
     private val responseInterceptor = ResponseRecorderInterceptor()
+    private val httpHeaderInterceptor = HTTPHeaderInterceptor()
 
     private val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(httpHeaderInterceptor)
         .addInterceptor(responseInterceptor)
         .apply {
             okHttpInterceptors.forEach { this.addInterceptor(it) }
         }
         .build()
+
 
     private val apolloClient = ApolloClient.Builder()
         .serverUrl(serverUrl)

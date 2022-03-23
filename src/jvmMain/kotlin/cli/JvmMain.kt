@@ -1,18 +1,25 @@
 package cli
 
+import cli.type.PhotoSize
 import com.apollographql.apollo3.api.Optional
 import com.apollographql.apollo3.api.Query
 import internal.GraphqlResponseRecorder
 import kotlinx.coroutines.runBlocking
 import java.io.File
+import kotlin.system.exitProcess
 
 val queryMap = mapOf<String, Query<*>>(
-    "LaunchsQueryResult" to LaunchesQuery(
-        pageSize = 3,
-        after = Optional.presentIfNotNull(null)),
-    "LaunchsQueryResult2" to LaunchesQuery(
-        pageSize = 3,
-        after = Optional.presentIfNotNull(null))
+    "ArticleResultData" to ArticleQuery(
+        "623437cf8cb557398dc8a503",
+        false,
+        Optional.Absent,
+        PhotoSize.s80x80,
+        PhotoSize.s80x80,
+        PhotoSize.s80x80,
+        PhotoSize.s80x80,
+        PhotoSize.s80x80,
+        PhotoSize.s80x80,
+        PhotoSize.s80x80),
 )
 
 fun main(args: Array<String>) {
@@ -34,7 +41,7 @@ fun main(args: Array<String>) {
             val response = responseRecorder.fetch(query)
             val outputDirectory = File(outputPathString + "/${name}.result.${extension}")
             outputDirectory.printWriter().use {
-                val newResult = response.raw.replace("\"", "\\\"")
+                val newResult = response.raw.replace("\"", "\\\"").trim()
                 val output = template
                     .replace("{variableName}", name)
                     .replace("{result}", newResult)
