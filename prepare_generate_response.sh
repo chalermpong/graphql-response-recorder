@@ -2,8 +2,8 @@
 
 if [ $# -eq 0 ]
   then
-    echo "Please insert copy path in the first argument. example ./prepare_generate_response ./bdit/graphql/*.graphql"
+    echo "Please insert graphql folder path to the first argument. Example: ./prepare_generate_response ../bdit-ios/Core/Core/GraphQL/"
 fi
 
-rm src/commonMain/graphql/query/*.graphql
-cp $1 src/commonMain/graphql/query/
+rm -r src/commonMain/graphql/query
+cp -r $1 src/commonMain/graphql/query

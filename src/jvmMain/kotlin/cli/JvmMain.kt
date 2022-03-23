@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
 
     val templatePathString = args[0]
     val outputPathString = args[1]
-    var extension: String = args[2]
+    val extension: String = args[2]
     val template = File(templatePathString).readText(Charsets.UTF_8)
 
     runBlocking {
@@ -34,7 +34,7 @@ fun main(args: Array<String>) {
             val outputDirectory = File(outputPathString + "/${name}.result.${extension}")
             outputDirectory.printWriter().use {
                 val newResult = response.raw.replace("\"", "\\\"")
-                var output = template
+                val output = template
                     .replace("{variableName}", name)
                     .replace("{result}", newResult)
                 it.write(output)
