@@ -18,7 +18,7 @@ val queryMap = mapOf<String, Query<*>>(
 fun main(args: Array<String>) {
     if (args.size != 4) {
         println("should add args [templatePath] [outputPath] [apolloServer] [outputExtension]")
-        println("Example: --args=\"../TestGraphQLGenerator/template/gql-generator-template ../TestGraphQLGenerator/output swift\"")
+        println("Example: --args=\"../TestGraphQLGenerator/template/gql-generator-template ../TestGraphQLGenerator/output https://apollo-fullstack-tutorial.herokuapp.com/graphql swift\"")
         return
     }
 
