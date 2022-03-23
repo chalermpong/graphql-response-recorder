@@ -7,5 +7,6 @@ buildscan.log
 *.hprof
 /.envrc
 .DS_Store
+src/commonMain/graphql/query/
 
 git-standup-report.txt
