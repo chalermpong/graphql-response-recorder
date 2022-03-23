@@ -16,19 +16,20 @@ val queryMap = mapOf<String, Query<*>>(
 )
 
 fun main(args: Array<String>) {
-    if (args.size != 3) {
-        println("should add args [templatePathString] [outputPathString] [outputExtension]")
+    if (args.size != 4) {
+        println("should add args [templatePath] [outputPath] [apolloServer] [outputExtension]")
         println("Example: --args=\"../TestGraphQLGenerator/template/gql-generator-template ../TestGraphQLGenerator/output swift\"")
         return
     }
 
     val templatePathString = args[0]
     val outputPathString = args[1]
-    val extension: String = args[2]
+    val apolloServerURL = args[2]
+    val extension: String = args[3]
     val template = File(templatePathString).readText(Charsets.UTF_8)
 
     runBlocking {
-        val responseRecorder = GraphqlResponseRecorder("https://apollo-fullstack-tutorial.herokuapp.com/graphql")
+        val responseRecorder = GraphqlResponseRecorder(apolloServerURL)
         val responses = queryMap.map { (name, query) ->
             val response = responseRecorder.fetch(query)
             val outputDirectory = File(outputPathString + "/${name}.result.${extension}")
