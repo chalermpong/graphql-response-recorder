@@ -26,9 +26,8 @@ application {
 
 apollo {
     packageName.set("cli")
-
     useSemanticNaming.set(true)
-
+    schemaFile.set(file("src/commonMain/graphql/schema.json"))
 }
 
 kotlin {
