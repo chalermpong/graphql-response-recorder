@@ -6,7 +6,6 @@ import com.apollographql.apollo3.api.Query
 import internal.GraphqlResponseRecorder
 import kotlinx.coroutines.runBlocking
 import java.io.File
-import kotlin.system.exitProcess
 
 val queryMap = mapOf<String, Query<*>>(
     "ArticleResultData" to ArticleQuery(
@@ -23,16 +22,20 @@ val queryMap = mapOf<String, Query<*>>(
 )
 
 fun main(args: Array<String>) {
-    if (args.size != 4) {
-        println("should add args [templatePath] [outputPath] [apolloServer] [outputExtension]")
-        println("Example: --args=\"../TestGraphQLGenerator/template/gql-generator-template ../TestGraphQLGenerator/output https://apollo-fullstack-tutorial.herokuapp.com/graphql swift\"")
-        return
+
+    var templatePathString = "./template/gql-swift-generator-template"
+    var outputPathString = "../bdit-ios/LongtunmanScreenshotTests/QueryResultGenerated/"
+    var apolloServerURL = "https://graph.staging.blockdit.com/graphql"
+    var extension: String = "swift"
+    if (args.size == 4) {
+        templatePathString = args[0]
+        outputPathString = args[1]
+        apolloServerURL = args[2]
+        extension: String = args[3]
+
     }
 
-    val templatePathString = args[0]
-    val outputPathString = args[1]
-    val apolloServerURL = args[2]
-    val extension: String = args[3]
+
     val template = File(templatePathString).readText(Charsets.UTF_8)
 
     runBlocking {
@@ -48,5 +51,8 @@ fun main(args: Array<String>) {
                 it.write(output)
             }
         }
+        println("===== Finished!!! =====")
+        println("args [templatePath] [outputPath] [apolloServer] [outputExtension]")
+        println("Example: --args=\"../TestGraphQLGenerator/template/gql-generator-template ../TestGraphQLGenerator/output https://apollo-fullstack-tutorial.herokuapp.com/graphql swift\"")
     }
 }
