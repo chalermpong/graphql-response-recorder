@@ -49,6 +49,7 @@ kotlin {
 
                 implementation("com.apollographql.apollo3:apollo-runtime:3.1.0")
                 implementation("com.apollographql.apollo3:apollo-api:3.1.0")
+                implementation("com.google.code.gson:gson:2.9.0")
 
                 /// implementation(Ktor.client.core)
                 /// implementation(Ktor.client.serialization)
